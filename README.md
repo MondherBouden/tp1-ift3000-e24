@@ -16,6 +16,10 @@ Considérons que vous travaillez avec la machine virtuelle du cours, que vous av
 
 Ceci aura pour effet de créer un nouveau répertoire nommé `tp1-ift3000-e24` et d'y déposer un clone (une copie) du projet.
 
+### Consulter la documentation
+
+On vous invite à consulter la [Documentation](https://mondherbouden.github.io/tp1/Tp1/index.html) des fonctions à compléter dans ce projet.
+
 ## Démarche à suivre
 
 Dans ce qui suit, on suppose que vous utilisez VSCode. Aussi, à moins de mention contraire, toutes les commandes mentionnées dans le présent document sont à exécuter dans un terminal (typiquement, celui que vous aurez ouvert dans VSCode).
