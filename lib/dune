@@ -1,0 +1,9 @@
+(library
+ (name tp1)
+ (public_name tp1)
+ (modules tp1))
+
+(env
+ (dev
+  (flags
+   (:standard -w -26-27-32-33))))
