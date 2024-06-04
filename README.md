@@ -64,7 +64,7 @@ Puis, faites vos tests.
 
 ### En cas d'erreurs
 
-Si suite à `dune build` ou `dune runtest`, vous avez des erreurs, vous pouvez soit corriger la situation dans le fichier `tp1.ml` et recompiler (`dune build`); soit ouvrir l'interpréteur (`dune utop` ou `ocaml`), copier-coller les parties de code que vous voulez tester, et faire vos tests. Dans tous les cas, les fonctions du module `gcp` seront toujours accessibles pour les tester. 
+Si suite à `dune build` ou `dune runtest`, vous avez des erreurs, vous pouvez soit corriger la situation dans le fichier `tp1.ml` et recompiler (`dune build`); soit ouvrir l'interpréteur (`dune utop` ou `ocaml`), copier-coller les parties de code que vous voulez tester, et faire vos tests. 
 
 ## Pour votre information - dune
 
