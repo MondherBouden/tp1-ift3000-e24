@@ -139,9 +139,41 @@ let reseau = Vlist  [{nom = "Auckland"; liste_voisins = []};
                     {nom = "Toronto"; liste_voisins = []};
                     {nom = "Vancouver"; liste_voisins = []}]
 
+let nre = Vlist [{nom = "Auckland"; liste_voisins = []};
+                {nom = "Bogota"; liste_voisins = []};
+                {nom = "Bruxelles"; liste_voisins = ["Bujumbura"]};
+                {nom = "Bujumbura"; liste_voisins = ["Bruxelles"]};
+                {nom = "Chicago"; liste_voisins = ["Vancouver"]};
+                {nom = "Chicoutimi"; liste_voisins = []};
+                {nom = "Detroit"; liste_voisins = []};
+                {nom = "Iqaluit"; liste_voisins = []};
+                {nom = "La_Havane"; liste_voisins = []};
+                {nom = "Montreal"; liste_voisins =
+                      ["Bruxelles"; "Detroit"; "New_York"; "Ottawa"; "Paris"; "Quebec";
+                       "Sherbrouke"; "Toronto"; "Vancouver"]};
+                {nom = "New_York"; liste_voisins = ["Detroit"]};
+                {nom = "Ottawa"; liste_voisins = ["Iqaluit"]};
+                {nom = "Paris"; liste_voisins = ["Montreal"]};
+                {nom = "Quebec"; liste_voisins =
+                      ["Chicago"; "Chicoutimi"; "La_Havane"; "Montreal"; "Sherbrouke"]};
+                {nom = "Sherbrouke"; liste_voisins = ["Quebec"]};
+                {nom = "Singapour"; liste_voisins = []};
+                {nom = "Tokyo"; liste_voisins = []};
+                {nom = "Toronto"; liste_voisins = ["Bogota"]};
+                {nom = "Vancouver"; liste_voisins = ["Auckland"; "Tokyo"; "Toronto"]}]
+
+(* Fonction pour odonner les villes dans le réseau *)
+let ordre r = match r with
+  |Vide -> Vide
+  |Vlist lv -> let lv' = (List.sort (fun v1 v2 -> let x = v1.nom and y = v2.nom in
+               if (x = y) then 0 else if (x < y) then 1 else (-1)) lv) in
+               Vlist ( List.fold_left (fun x y ->
+               ({nom = y.nom; liste_voisins = (List.sort compare (y.liste_voisins))}::x)) [] lv')
+
 let jeu_ajouter_liste_trajets =
   ( "ajouter_liste_trajets",
-    (fun listetragets resultat -> ajouter_liste_trajets listetragets reseau = resultat),
+    (fun listetragets resultat -> let nr = ajouter_liste_trajets listetragets reseau in
+                                  (ordre nr) = resultat),
     [
       ( [("Montreal","Quebec");("Montreal","Sherbrouke");("Quebec","Sherbrouke"); 
       ("Quebec","Chicoutimi");("Sherbrouke","Quebec");("Montreal","Paris");
@@ -151,28 +183,7 @@ let jeu_ajouter_liste_trajets =
        ("Montreal","Bruxelles");("Bruxelles","Bujumbura");("Ottawa","Iqaluit");
        ("Quebec","Chicago");("Vancouver","Tokyo");("Vancouver","Auckland");
        ("Chicago","Vancouver");("Bujumbura","Bruxelles");("New_York","Detroit")],
-      Vlist [{nom = "Auckland"; liste_voisins = []};
-      {nom = "Bogota"; liste_voisins = []};
-      {nom = "Bruxelles"; liste_voisins = ["Bujumbura"]};
-      {nom = "Bujumbura"; liste_voisins = ["Bruxelles"]};
-      {nom = "Chicago"; liste_voisins = ["Vancouver"]};
-      {nom = "Chicoutimi"; liste_voisins = []};
-      {nom = "Detroit"; liste_voisins = []};
-      {nom = "Iqaluit"; liste_voisins = []};
-      {nom = "La_Havane"; liste_voisins = []};
-      {nom = "Montreal"; liste_voisins =
-        ["Quebec"; "Sherbrouke"; "Paris"; "New_York"; "Detroit"; "Ottawa";
-         "Vancouver"; "Toronto"; "Bruxelles"]};
-      {nom = "New_York"; liste_voisins = ["Detroit"]};
-      {nom = "Ottawa"; liste_voisins = ["Iqaluit"]};
-      {nom = "Paris"; liste_voisins = ["Montreal"]};
-      {nom = "Quebec"; liste_voisins =
-        ["Montreal"; "Sherbrouke"; "Chicoutimi"; "La_Havane"; "Chicago"]};
-      {nom = "Sherbrouke"; liste_voisins = ["Quebec"]};
-      {nom = "Singapour"; liste_voisins = []};
-      {nom = "Tokyo"; liste_voisins = []};
-      {nom = "Toronto"; liste_voisins = ["Bogota"]};
-      {nom = "Vancouver"; liste_voisins = ["Toronto"; "Tokyo"; "Auckland"]}],
+       nre,
         {| ajouter_liste_trajets listetragets reseau |} )
     ],
     (* ---- Cas devant soulever une exception! ---- *)
@@ -264,14 +275,6 @@ let fermeture = Vlist [{nom = "Auckland"; liste_voisins = []};
                       {nom = "Toronto"; liste_voisins = ["Bogota"]};
                       {nom = "Vancouver";
                       liste_voisins = ["Auckland"; "Bogota"; "Tokyo"; "Toronto"]}]
-                    
-(* Fonction pour odonner les villes dans le réseau *)
-let ordre r = match r with
-  |Vide -> Vide
-  |Vlist lv -> let lv' = (List.sort (fun v1 v2 -> let x = v1.nom and y = v2.nom in
-               if (x = y) then 0 else if (x < y) then 1 else (-1)) lv) in
-               Vlist ( List.fold_left (fun x y ->
-               ({nom = y.nom; liste_voisins = (List.sort compare (y.liste_voisins))}::x)) [] lv')
 
 let jeu_trouver_chemins =
   ( "trouver_chemins",
